@@ -65,10 +65,12 @@ env/
 .venv
 
 # Database
+# Note: Backend/portal.db is included for deployment
 *.db
 *.sqlite
 *.sqlite3
 portal.db
+!Backend/portal.db
 
 # Node
 node_modules/

@@ -30,10 +30,12 @@ venv.bak/
 env.bak/
 
 # Database
+# Note: portal.db is now included in the repository for deployment
 *.db
 *.sqlite
 *.sqlite3
 portal.db
+!portal.db
 *.db-journal
 
 # Environment Variables
