@@ -18,9 +18,38 @@ import "./styles/index.css";
 
 // API Configuration
 // Use proxy in development (via Vite), environment variable in production
-const API_BASE_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-  ? "/api"  // Use Vite proxy in development
-  : (import.meta.env.VITE_API_URL || "http://localhost:8000");  // Use environment variable in production
+const getApiBaseUrl = () => {
+  const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+  
+  if (isLocalhost) {
+    return "/api";  // Use Vite proxy in development
+  }
+  
+  // In production, use environment variable (required)
+  // Vite environment variables are available at build time via import.meta.env
+  const apiUrl = import.meta.env.VITE_API_URL;
+  
+  if (!apiUrl || apiUrl.trim() === "") {
+    const errorMsg = "VITE_API_URL environment variable is not set! Please configure it in Vercel Dashboard → Settings → Environment Variables, then redeploy.";
+    console.error("=".repeat(80));
+    console.error("🚨 API CONFIGURATION ERROR");
+    console.error(errorMsg);
+    console.error("Current hostname:", window.location.hostname);
+    console.error("Available VITE_ env vars:", Object.keys(import.meta.env).filter(k => k.startsWith('VITE_')));
+    console.error("=".repeat(80));
+    // Return empty string - fetch calls will fail but error messages will be clear
+    return "";
+  }
+  
+  return apiUrl;
+};
+
+const API_BASE_URL = getApiBaseUrl();
+
+// Helper function to check if API is configured
+const isApiConfigured = () => {
+  return API_BASE_URL && API_BASE_URL.trim() !== "";
+};
 
 // EmailJS Configuration
 const EMAIL_CONFIG = {
@@ -3507,7 +3536,13 @@ function LoginPage({ onLogin, onSwitchToSignup }) {
       }
     } catch (err) {
       console.error("Login error:", err);
-      setError(`Network error: ${err.message}. Please check if the server is running at ${API_BASE_URL}`);
+      if (!isApiConfigured()) {
+        setError("Backend API is not configured. Please set VITE_API_URL environment variable in Vercel Dashboard → Settings → Environment Variables, then redeploy. See VERCEL_ENV_SETUP.md for instructions.");
+      } else if (err.message.includes("Failed to fetch") || err.message.includes("Load failed")) {
+        setError(`Cannot connect to backend API at ${API_BASE_URL}. Please check if the server is running and CORS is configured correctly.`);
+      } else {
+        setError(`Network error: ${err.message}. Please check if the server is running at ${API_BASE_URL}`);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -3636,7 +3671,13 @@ function SignupPage({ onSwitchToLogin }) {
       }
     } catch (err) {
       console.error("Signup error:", err);
-      setError(`Network error: ${err.message}. Please check if the server is running at ${API_BASE_URL}`);
+      if (!isApiConfigured()) {
+        setError("Backend API is not configured. Please set VITE_API_URL environment variable in Vercel Dashboard → Settings → Environment Variables, then redeploy. See VERCEL_ENV_SETUP.md for instructions.");
+      } else if (err.message.includes("Failed to fetch") || err.message.includes("Load failed")) {
+        setError(`Cannot connect to backend API at ${API_BASE_URL}. Please check if the server is running and CORS is configured correctly.`);
+      } else {
+        setError(`Network error: ${err.message}. Please check if the server is running at ${API_BASE_URL}`);
+      }
     } finally {
       setIsLoading(false);
     }

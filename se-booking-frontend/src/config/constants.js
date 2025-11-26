@@ -1,9 +1,24 @@
 // API Configuration
 // Use environment variable in production, localhost in development
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 
-  (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-    ? "http://localhost:8000"
-    : "http://localhost:8000");
+const getApiBaseUrl = () => {
+  const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+  
+  if (isLocalhost) {
+    return "http://localhost:8000";
+  }
+  
+  // In production, use environment variable (required)
+  const apiUrl = import.meta.env.VITE_API_URL;
+  
+  if (!apiUrl) {
+    console.error("VITE_API_URL environment variable is not set! Please configure it in Vercel.");
+    return "";
+  }
+  
+  return apiUrl;
+};
+
+export const API_BASE_URL = getApiBaseUrl();
 
 // EmailJS Configuration
 export const EMAIL_CONFIG = {
