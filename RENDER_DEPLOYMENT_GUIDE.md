@@ -117,12 +117,18 @@ Value: [Generate a strong random string - see below]
 xK9mP2qL8vN5wR7tY3uI6oA1sD4fG0hJ2kL9mN8pQ5rS3tU6vW9xY2zA1bC4dE7f
 ```
 
-#### **PYTHON_VERSION** (Optional but recommended)
+#### **PYTHON_VERSION** (Recommended - fixes build issues)
 ```
 Key: PYTHON_VERSION
-Value: 3.11
+Value: 3.11.10
 ```
-(Or 3.10, 3.12 - check what version you're using locally)
+
+**OR** create a `runtime.txt` file in your `Backend` folder with:
+```
+python-3.11.10
+```
+
+⚠️ **Important**: Python 3.13 has compatibility issues with some packages. Use Python 3.11 or 3.12 for better compatibility.
 
 #### **ALGORITHM** (Optional - already in code)
 ```

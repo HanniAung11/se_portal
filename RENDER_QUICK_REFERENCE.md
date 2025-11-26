@@ -20,8 +20,9 @@
    - Generate with: `python -c "import secrets; print(secrets.token_urlsafe(32))"`
    - Or use: https://randomkeygen.com/
 
-2. **PYTHON_VERSION** (optional)
-   - Value: `3.11` (or your Python version)
+2. **PYTHON_VERSION** (recommended - fixes build errors)
+   - Value: `3.11.10`
+   - **OR** create `Backend/runtime.txt` with: `python-3.11.10`
 
 ## After Deployment:
 
