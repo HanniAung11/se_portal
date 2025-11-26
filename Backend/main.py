@@ -2787,6 +2787,105 @@ async def get_event_attendance(
     ]
 
 # ============================================
+# ADMIN USER MANAGEMENT ENDPOINTS
+# ============================================
+
+class AdminUserCreate(BaseModel):
+    student_id: str
+    password: str
+    name: Optional[str] = None
+    year: Optional[int] = None
+
+@app.get("/admin/users", response_model=List[UserResponse])
+async def get_admin_users(current_user = Depends(get_current_admin)):
+    """Get all admin users (admin only)"""
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT * FROM users WHERE role = 'admin' ORDER BY created_at DESC")
+    admins = cursor.fetchall()
+    conn.close()
+    
+    return [
+        UserResponse(
+            id=admin["id"],
+            student_id=admin["student_id"],
+            name=admin["name"],
+            year=admin["year"]
+        )
+        for admin in admins
+    ]
+
+@app.post("/admin/users", response_model=UserResponse)
+async def create_admin_user(admin_data: AdminUserCreate, current_user = Depends(get_current_admin)):
+    """Create a new admin user or convert existing user to admin (admin only)"""
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    # Validate student ID format
+    if not admin_data.student_id or len(admin_data.student_id) != 8:
+        conn.close()
+        raise HTTPException(status_code=400, detail="Student ID must be exactly 8 digits")
+    
+    # Validate password
+    if not admin_data.password or len(admin_data.password) < 6:
+        conn.close()
+        raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
+    
+    # Check if user already exists
+    cursor.execute("SELECT * FROM users WHERE student_id = ?", (admin_data.student_id,))
+    existing_user = cursor.fetchone()
+    
+    if existing_user:
+        # Convert existing user to admin and update password
+        hashed_password = get_password_hash(admin_data.password)
+        cursor.execute(
+            "UPDATE users SET role = 'admin', password_hash = ? WHERE student_id = ?",
+            (hashed_password, admin_data.student_id)
+        )
+        conn.commit()
+        conn.close()
+        
+        return UserResponse(
+            id=existing_user["id"],
+            student_id=existing_user["student_id"],
+            name=existing_user["name"],
+            year=existing_user["year"]
+        )
+    else:
+        # Create new admin user
+        # Use provided name or default to student_id, use provided year or default to 1
+        name = admin_data.name if admin_data.name else admin_data.student_id
+        year = admin_data.year if admin_data.year else 1
+        
+        # Validate year if provided
+        if year not in [1, 2, 3, 4]:
+            conn.close()
+            raise HTTPException(status_code=400, detail="Year must be 1, 2, 3, or 4")
+        
+        hashed_password = get_password_hash(admin_data.password)
+        
+        try:
+            cursor.execute(
+                "INSERT INTO users (student_id, name, password_hash, year, role) VALUES (?, ?, ?, ?, 'admin')",
+                (admin_data.student_id, name, hashed_password, year)
+            )
+            conn.commit()
+            user_id = cursor.lastrowid
+        except sqlite3.IntegrityError:
+            conn.close()
+            raise HTTPException(status_code=400, detail="Student ID already exists")
+        
+        conn.close()
+        
+        return UserResponse(
+            id=user_id,
+            student_id=admin_data.student_id,
+            name=name,
+            year=year
+        )
+
+# ============================================
 # HEALTH CHECK
 # ============================================
 

@@ -5942,6 +5942,226 @@ function AdminDashboardPage({ currentUser, authToken, onLogout, onNavigate }) {
             </button>
           </div>
         </div>
+
+        {/* Admin User Management */}
+        <AdminUserManagement authToken={authToken} />
+      </div>
+    </div>
+  );
+}
+
+// Admin User Management Component
+function AdminUserManagement({ authToken }) {
+  const [admins, setAdmins] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [studentId, setStudentId] = useState("");
+  const [password, setPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState({ type: "", text: "" });
+
+  useEffect(() => {
+    loadAdmins();
+  }, []);
+
+  const loadAdmins = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin/users`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setAdmins(data);
+      } else {
+        console.error("Failed to load admins");
+      }
+    } catch (error) {
+      console.error("Error loading admins:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAddAdmin = async (e) => {
+    e.preventDefault();
+    setMessage({ type: "", text: "" });
+
+    // Validate inputs
+    if (!studentId || studentId.length !== 8) {
+      setMessage({ type: "error", text: "Student ID must be exactly 8 digits" });
+      return;
+    }
+
+    if (!password || password.length < 6) {
+      setMessage({ type: "error", text: "Password must be at least 6 characters" });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin/users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify({
+          student_id: studentId,
+          password: password,
+        }),
+      });
+
+      if (response.ok) {
+        const newAdmin = await response.json();
+        setMessage({ type: "success", text: `Admin ${newAdmin.student_id} added successfully!` });
+        setStudentId("");
+        setPassword("");
+        loadAdmins(); // Reload the list
+      } else {
+        const errorData = await response.json();
+        setMessage({ type: "error", text: errorData.detail || "Failed to add admin" });
+      }
+    } catch (error) {
+      console.error("Error adding admin:", error);
+      setMessage({ type: "error", text: "Network error. Please try again." });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="card" style={{ padding: "1.5rem" }}>
+        <div>Loading admin users...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="card" style={{ padding: "1.5rem", marginTop: "2rem" }}>
+      <h3 style={{ marginBottom: "1.5rem", color: "#3b82f6" }}>Admin User Management</h3>
+      
+      {/* Add Admin Form */}
+      <div style={{ marginBottom: "2rem", padding: "1.5rem", background: "#f9fafb", borderRadius: "0.5rem" }}>
+        <h4 style={{ marginBottom: "1rem", fontSize: "1.1rem" }}>Add New Admin</h4>
+        <form onSubmit={handleAddAdmin} style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "flex-end" }}>
+          <div style={{ flex: "1 1 200px" }}>
+            <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "500" }}>
+              Student ID (8 digits)
+            </label>
+            <input
+              type="text"
+              value={studentId}
+              onChange={(e) => setStudentId(e.target.value.replace(/\D/g, "").slice(0, 8))}
+              placeholder="12345678"
+              required
+              style={{
+                width: "100%",
+                padding: "0.75rem",
+                border: "1px solid #d1d5db",
+                borderRadius: "0.375rem",
+                fontSize: "1rem",
+              }}
+            />
+          </div>
+          <div style={{ flex: "1 1 200px" }}>
+            <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "500" }}>
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter password"
+              required
+              minLength={6}
+              style={{
+                width: "100%",
+                padding: "0.75rem",
+                border: "1px solid #d1d5db",
+                borderRadius: "0.375rem",
+                fontSize: "1rem",
+              }}
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="submit-btn"
+            style={{
+              flex: "0 0 auto",
+              padding: "0.75rem 1.5rem",
+              background: isSubmitting ? "#9ca3af" : "#3b82f6",
+              cursor: isSubmitting ? "not-allowed" : "pointer",
+            }}
+          >
+            {isSubmitting ? "Adding..." : "Add Admin"}
+          </button>
+        </form>
+        {message.text && (
+          <div
+            style={{
+              marginTop: "1rem",
+              padding: "0.75rem",
+              borderRadius: "0.375rem",
+              background: message.type === "success" ? "#d1fae5" : "#fee2e2",
+              color: message.type === "success" ? "#065f46" : "#991b1b",
+            }}
+          >
+            {message.text}
+          </div>
+        )}
+      </div>
+
+      {/* Admin Users Table */}
+      <div>
+        <h4 style={{ marginBottom: "1rem", fontSize: "1.1rem" }}>Current Admin Users ({admins.length})</h4>
+        {admins.length === 0 ? (
+          <div style={{ padding: "2rem", textAlign: "center", color: "#6b7280" }}>
+            No admin users found. Add one using the form above.
+          </div>
+        ) : (
+          <div style={{ overflowX: "auto" }}>
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+                background: "white",
+                borderRadius: "0.5rem",
+                overflow: "hidden",
+              }}
+            >
+              <thead>
+                <tr style={{ background: "#f3f4f6" }}>
+                  <th style={{ padding: "0.75rem", textAlign: "left", borderBottom: "2px solid #e5e7eb", fontWeight: "600" }}>
+                    Student ID
+                  </th>
+                  <th style={{ padding: "0.75rem", textAlign: "left", borderBottom: "2px solid #e5e7eb", fontWeight: "600" }}>
+                    Name
+                  </th>
+                  <th style={{ padding: "0.75rem", textAlign: "left", borderBottom: "2px solid #e5e7eb", fontWeight: "600" }}>
+                    Year
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {admins.map((admin, index) => (
+                  <tr
+                    key={admin.id}
+                    style={{
+                      borderBottom: index < admins.length - 1 ? "1px solid #e5e7eb" : "none",
+                      background: index % 2 === 0 ? "white" : "#f9fafb",
+                    }}
+                  >
+                    <td style={{ padding: "0.75rem", fontWeight: "500" }}>{admin.student_id}</td>
+                    <td style={{ padding: "0.75rem" }}>{admin.name}</td>
+                    <td style={{ padding: "0.75rem" }}>Year {admin.year}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );
