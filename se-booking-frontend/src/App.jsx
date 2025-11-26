@@ -17,10 +17,10 @@ import {
 import "./styles/index.css";
 
 // API Configuration
-// Use proxy in development (via Vite), direct URL as fallback
+// Use proxy in development (via Vite), environment variable in production
 const API_BASE_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
   ? "/api"  // Use Vite proxy in development
-  : "http://localhost:8000";  // Direct URL in production
+  : (import.meta.env.VITE_API_URL || "http://localhost:8000");  // Use environment variable in production
 
 // EmailJS Configuration
 const EMAIL_CONFIG = {

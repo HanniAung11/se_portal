@@ -1,0 +1,13 @@
+{
+  "buildCommand": "cd se-booking-frontend && npm install && npm run build",
+  "outputDirectory": "se-booking-frontend/dist",
+  "installCommand": "cd se-booking-frontend && npm install",
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+
