@@ -1,0 +1,29 @@
+/* Main Styles Index - Imports all stylesheets */
+
+/* Variables and Globals */
+@import './variables.css';
+@import './globals.css';
+
+/* Utilities */
+@import './utilities/buttons.css';
+@import './utilities/forms.css';
+@import './utilities/animations.css';
+
+/* Components */
+@import './components/Header.css';
+@import './components/Footer.css';
+@import './components/Modal.css';
+@import './components/BookingCard.css';
+@import './components/Table.css';
+
+/* Pages */
+@import './pages/AboutPage.css';
+@import './pages/AuthPage.css';
+@import './pages/BookingPage.css';
+@import './pages/ChatPage.css';
+@import './pages/CurriculumPage.css';
+@import './pages/CreditsPage.css';
+@import './pages/GPAPage.css';
+@import './pages/ContactPage.css';
+@import './pages/ProfilePage.css';
+

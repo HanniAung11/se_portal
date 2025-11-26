@@ -1,0 +1,85 @@
+/* Table Styles */
+.timeslot-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--spacing-md);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.timeslot-table th,
+.timeslot-table td {
+  padding: 0.8rem;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.timeslot-table th {
+  background: var(--color-accent);
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.timeslot-table tr:nth-child(even) {
+  background: var(--bg-tertiary);
+}
+
+.timeslot-table tr.selected {
+  background-color: #e3f2ff;
+  font-weight: bold;
+}
+
+.timeslot-table tr.unavailable {
+  color: #aaa;
+  pointer-events: none;
+}
+
+.slot-action {
+  text-align: center;
+  width: 100px;
+}
+
+/* Credit Planner Tables - Styles moved to CreditsPage.css for better organization */
+
+/* Responsive Design for Tables */
+@media (max-width: 768px) {
+  .timeslot-table {
+    font-size: 0.9rem;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .timeslot-table th,
+  .timeslot-table td {
+    padding: 0.6rem 0.5rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .slot-action {
+    width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .timeslot-table {
+    font-size: 0.8rem;
+  }
+
+  .timeslot-table th,
+  .timeslot-table td {
+    padding: 0.5rem 0.4rem;
+    font-size: 0.8rem;
+  }
+
+  .timeslot-table th {
+    font-size: 0.85rem;
+  }
+
+  .slot-action {
+    width: 70px;
+  }
+}
+

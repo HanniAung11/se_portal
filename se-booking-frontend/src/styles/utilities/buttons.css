@@ -1,0 +1,361 @@
+/* Button Styles */
+.submit-btn {
+  background: var(--color-primary);
+  color: var(--text-light);
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.submit-btn:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.return-btn {
+  padding: 0.8rem 1.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  background: var(--color-neutral-light);
+  color: var(--text-light);
+  transition: all var(--transition-normal);
+}
+
+.return-btn:hover {
+  background: var(--color-neutral-lighter);
+  transform: translateY(-2px);
+}
+
+.cancel-booking-btn {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  background: var(--color-error);
+  color: var(--text-light);
+  transition: all var(--transition-normal);
+}
+
+.cancel-booking-btn:hover {
+  background: var(--color-error-dark);
+  transform: translateY(-2px);
+}
+
+.cancel-booking-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.your-bookings-btn {
+  padding: 0.75rem 1.75rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  background: var(--bg-gradient-primary);
+  color: var(--text-light);
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.your-bookings-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.your-bookings-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
+}
+
+.your-bookings-btn:hover::before {
+  opacity: 1;
+}
+
+.your-bookings-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.login-cta-btn {
+  padding: var(--spacing-md) var(--spacing-3xl);
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  background: var(--bg-gradient-primary);
+  color: var(--text-light);
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-button);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.login-cta-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+}
+
+.login-cta-btn:active {
+  transform: translateY(-1px) scale(1.02);
+}
+
+.addBtn {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: var(--text-light);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all var(--transition-normal);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.addBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.deleteBtn {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid #e2e8f0;
+  padding: 6px 10px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* Credit-specific delete button */
+.credit-container .deleteBtn {
+  background: rgba(220, 53, 69, 0.8);
+  backdrop-filter: blur(10px);
+  color: var(--text-light);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all var(--transition-normal);
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+.credit-container .deleteBtn:hover {
+  background: rgba(200, 35, 51, 0.9);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+}
+
+/* Credit container submit button */
+.credit-container .submit-btn {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: var(--text-light);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.credit-container .submit-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.credit-container .submit-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.credit-container .submit-btn:hover::before {
+  opacity: 1;
+}
+
+/* Confirm button styles are now in Modal.css for better organization */
+.confirm-btn {
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: var(--text-light);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition-normal);
+  margin: 0.3rem;
+}
+
+.confirm-btn:hover {
+  background: var(--color-accent-dark);
+}
+
+.confirm-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.show-major-btn {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: var(--text-light);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.show-major-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.show-major-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+.show-major-btn:hover::before {
+  opacity: 1;
+}
+
+/* Responsive Design for Buttons */
+@media (max-width: 768px) {
+  .submit-btn,
+  .return-btn {
+    padding: 0.7rem 1.4rem;
+    font-size: 0.95rem;
+  }
+
+  .cancel-booking-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .your-bookings-btn {
+    padding: 0.65rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .login-cta-btn {
+    padding: var(--spacing-sm) var(--spacing-2xl);
+    font-size: 1.1rem;
+  }
+
+  .addBtn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .deleteBtn {
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+
+  .credit-container .deleteBtn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .show-major-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .submit-btn,
+  .return-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    width: 100%;
+  }
+
+  .cancel-booking-btn {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.85rem;
+    width: 100%;
+  }
+
+  .your-bookings-btn {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.85rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .login-cta-btn {
+    padding: var(--spacing-sm) var(--spacing-xl);
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .addBtn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .deleteBtn {
+    padding: 4px 6px;
+    font-size: 10px;
+  }
+
+  .credit-container .deleteBtn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .show-major-btn {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.85rem;
+    width: 100%;
+  }
+}
+

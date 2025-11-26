@@ -1,0 +1,88 @@
+/* CSS Variables / Theme System */
+:root {
+  /* Colors - Primary */
+  --color-primary: #667eea;
+  --color-primary-dark: #5568d3;
+  --color-primary-light: #8b9ef0;
+  
+  /* Colors - Secondary */
+  --color-secondary: #764ba2;
+  --color-secondary-dark: #5d3a7e;
+  
+  /* Colors - Accent */
+  --color-accent: #0785cc;
+  --color-accent-dark: #056ba3;
+  --color-accent-light: #0a9de8;
+  
+  /* Colors - Semantic */
+  --color-success: #4caf50;
+  --color-error: #dc3545;
+  --color-error-dark: #c82333;
+  --color-warning: #ffc107;
+  --color-info: #17a2b8;
+  
+  /* Colors - Neutral */
+  --color-neutral-dark: #156a83;
+  --color-neutral-darker: #0f5062;
+   --color-neutral-lighter: #5a6268;
+  
+  /* Backgrounds */
+  --bg-primary: #fff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --bg-dark: #1f2937;
+  --bg-dark-secondary: #374151;
+  --bg-dark-tertiary: #4b5563;
+  --bg-gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --bg-gradient-credit: linear-gradient(180deg, #ffffff 0%, #fbfbff 100%);
+  
+  /* Text Colors */
+  --text-primary: #333;
+  --text-secondary: #666;
+  --text-muted: #64748b;
+  --text-light: #fff;
+  --text-dark: #0f172a;
+  --text-gray: #65676b;
+  --text-gray-light: #d1d5db;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 2.5rem;
+  --spacing-3xl: 3rem;
+  
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-full: 999px;
+  --radius-circle: 50%;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 12px 28px rgba(0, 0, 0, 0.15);
+  --shadow-dark: 0 6px 20px rgba(0, 0, 0, 0.5);
+  --shadow-button: 0 8px 20px rgba(102, 126, 234, 0.3);
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Z-index */
+  --z-dropdown: 20;
+  --z-modal: 999;
+  --z-header: 2;
+  
+  /* Layout */
+  --max-width-container: 1200px;
+  --header-height: 300px;
+}
+

@@ -1,0 +1,624 @@
+/* GPA Calculator Page Styles */
+.gpa-container {
+  padding: var(--spacing-md);
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  max-width: 900px;
+  margin: var(--spacing-md) auto;
+}
+
+/* Transcript Card Styles */
+.transcript-card {
+  background: var(--bg-gradient-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.transcript-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  pointer-events: none;
+}
+
+.transcript-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));
+  transform: scaleX(0);
+  transition: transform var(--transition-normal);
+}
+
+.transcript-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.transcript-card:hover::before {
+  opacity: 1;
+}
+
+.transcript-card:hover::after {
+  transform: scaleX(1);
+}
+
+.transcript-semester-controls {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.transcript-student-info {
+  position: relative;
+  z-index: 1;
+}
+
+.transcript-table-wrapper {
+  position: relative;
+  z-index: 1;
+  overflow-x: auto;
+  margin-bottom: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.transcript-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+}
+
+.transcript-table thead {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+.transcript-table th {
+  padding: var(--spacing-md) var(--spacing-lg);
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.transcript-table td {
+  padding: var(--spacing-md) var(--spacing-lg);
+  color: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background var(--transition-fast);
+}
+
+.transcript-table tbody tr {
+  transition: all var(--transition-fast);
+}
+
+.transcript-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(4px);
+}
+
+.transcript-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.transcript-table td strong {
+  font-weight: 600;
+  color: var(--text-light);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.transcript-stats {
+  display: flex;
+  gap: var(--spacing-xl);
+  flex-wrap: wrap;
+  padding: var(--spacing-lg);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.transcript-stat-item {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.transcript-stat-item strong {
+  font-weight: 600;
+  margin-right: var(--spacing-xs);
+}
+
+.transcript-gpa {
+  font-size: 1.75rem;
+  color: var(--text-light);
+  font-weight: 700;
+  margin-left: var(--spacing-xs);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.transcript-semester-label {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-left: var(--spacing-sm);
+  font-weight: 500;
+}
+
+/* GPA Calculator Card Styles */
+.gpa-calculator-card {
+  background: var(--bg-gradient-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  margin-top: var(--spacing-xl);
+}
+
+.gpa-calculator-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  pointer-events: none;
+}
+
+.gpa-calculator-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));
+  transform: scaleX(0);
+  transition: transform var(--transition-normal);
+}
+
+.gpa-calculator-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.gpa-calculator-card:hover::before {
+  opacity: 1;
+}
+
+.gpa-calculator-card:hover::after {
+  transform: scaleX(1);
+}
+
+.gpa-calculator-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  position: relative;
+  z-index: 1;
+}
+
+.gpa-row-item {
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  transition: all var(--transition-fast);
+}
+
+.gpa-row-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateX(4px);
+}
+
+.gpa-row-inputs {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.gpa-course-input-wrapper {
+  flex: 2;
+  position: relative;
+  min-width: 200px;
+}
+
+.gpa-input {
+  width: 100%;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  color: var(--text-light);
+  font-size: 0.95rem;
+  transition: all var(--transition-fast);
+}
+
+.gpa-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.gpa-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.gpa-input-small {
+  width: 100px;
+  flex-shrink: 0;
+}
+
+.gpa-select {
+  width: 120px;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  color: var(--text-light);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.gpa-select:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.gpa-select option {
+  background: var(--color-primary);
+  color: var(--text-light);
+}
+
+.gpa-remove-btn {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(220, 53, 69, 0.2);
+  backdrop-filter: blur(10px);
+  color: var(--text-light);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.gpa-remove-btn:hover {
+  background: rgba(220, 53, 69, 0.4);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.gpa-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-lg);
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.gpa-actions .submit-btn {
+  box-shadow: var(--shadow-button);
+}
+
+.gpa-actions .return-btn {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: var(--text-light);
+}
+
+.gpa-actions .return-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.gpa-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: var(--radius-md);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  margin-top: var(--spacing-xs);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.gpa-suggestion-item {
+  padding: var(--spacing-md) var(--spacing-lg);
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all var(--transition-fast);
+}
+
+.gpa-suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.gpa-suggestion-item:hover,
+.gpa-suggestion-item.active {
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.gpa-suggestion-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.gpa-suggestion-meta {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.gpa-result-card {
+  margin-top: var(--spacing-xl);
+  padding: var(--spacing-xl);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  transition: all var(--transition-normal);
+}
+
+.gpa-result-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+}
+
+.gpa-result-title {
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--text-light);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.gpa-result-value {
+  font-size: 2rem;
+  color: var(--text-light);
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.gpa-result-message {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design for GPA Calculator */
+@media (max-width: 768px) {
+  .gpa-calculator-card {
+    padding: var(--spacing-lg);
+  }
+
+  .gpa-row-inputs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .gpa-course-input-wrapper {
+    min-width: 100%;
+  }
+
+  .gpa-input-small,
+  .gpa-select {
+    width: 100%;
+  }
+
+  .gpa-remove-btn {
+    width: 100%;
+  }
+
+  .gpa-actions {
+    flex-direction: column;
+  }
+
+  .gpa-actions button {
+    width: 100%;
+  }
+}
+
+.gpa-container h2 {
+  color: var(--color-neutral-dark);
+  margin-bottom: 0.5rem;
+}
+
+.gpa-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.gpa-row input,
+.gpa-row select {
+  padding: 0.6rem;
+  border-radius: var(--radius-md);
+  border: 1px solid #e2e8f0;
+}
+
+.gpa-result {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  border-radius: 10px;
+  background: var(--bg-tertiary);
+  color: var(--text-dark);
+}
+
+/* Autocomplete Suggestions */
+.gpa-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border: 1px solid #ccc;
+  border-radius: var(--radius-sm);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  margin-top: 4px;
+  box-shadow: var(--shadow-md);
+}
+
+.gpa-suggestion-item {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.gpa-suggestion-item:hover,
+.gpa-suggestion-item.active {
+  background: #f0f0f0;
+}
+
+.gpa-suggestion-title {
+  font-weight: 500;
+}
+
+.gpa-suggestion-meta {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* Responsive Design for GPA Page */
+@media (max-width: 768px) {
+  .gpa-container {
+    max-width: 100%;
+    padding: var(--spacing-md);
+    margin: var(--spacing-sm) auto;
+  }
+
+  .gpa-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .gpa-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-sm);
+  }
+
+  .gpa-row input,
+  .gpa-row select {
+    width: 100%;
+    padding: 0.7rem;
+  }
+
+  .gpa-result {
+    padding: var(--spacing-sm);
+    font-size: 0.95rem;
+  }
+
+  .gpa-suggestions {
+    max-height: 150px;
+  }
+
+  .gpa-suggestion-item {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gpa-container {
+    padding: var(--spacing-sm);
+    margin: var(--spacing-xs) auto;
+  }
+
+  .gpa-container h2 {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .gpa-row {
+    gap: 4px;
+  }
+
+  .gpa-row input,
+  .gpa-row select {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  .gpa-result {
+    padding: var(--spacing-sm);
+    font-size: 0.9rem;
+    margin-top: var(--spacing-sm);
+  }
+
+  .gpa-suggestions {
+    max-height: 120px;
+  }
+
+  .gpa-suggestion-item {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .gpa-suggestion-title {
+    font-size: 0.9rem;
+  }
+
+  .gpa-suggestion-meta {
+    font-size: 11px;
+  }
+}
+

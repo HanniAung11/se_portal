@@ -1,0 +1,50 @@
+/* Authentication Pages (Login/Signup) Styles */
+.auth-form-container {
+  max-width: 500px;
+  margin: var(--spacing-xl) auto;
+  padding: var(--spacing-2xl);
+  background: var(--bg-primary);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form-container h2 {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-primary);
+  font-size: 2rem;
+}
+
+/* Responsive Design for Auth Page */
+@media (max-width: 768px) {
+  .auth-form-container {
+    max-width: 90%;
+    padding: var(--spacing-xl);
+    margin: var(--spacing-lg) auto;
+  }
+
+  .auth-form-container h2 {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-form-container {
+    max-width: 95%;
+    padding: var(--spacing-lg);
+    margin: var(--spacing-md) auto;
+  }
+
+  .auth-form-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 0.95rem;
+    padding: 0.7rem var(--spacing-sm);
+  }
+}
+
