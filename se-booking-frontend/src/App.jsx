@@ -4368,6 +4368,7 @@ function ChatPage({ currentUser, authToken, onLogout, onNavigate }) {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [lastMessageId, setLastMessageId] = useState(0);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const messagesEndRef = useRef(null);
   const chatMessagesRef = useRef(null);
 
@@ -4575,9 +4576,15 @@ function ChatPage({ currentUser, authToken, onLogout, onNavigate }) {
       />
 
       <div className="chat-container" style={{ width: "100%", margin: 0, padding: 0 }}>
-        <div style={{ display: "flex", height: "calc(100vh - 180px)", width: "100%" }}>
+        {/* Overlay for mobile sidebar */}
+        <div 
+          className={`chat-sidebar-overlay ${sidebarOpen ? 'active' : ''}`}
+          onClick={() => setSidebarOpen(false)}
+        />
+        
+        <div style={{ display: "flex", height: "calc(100vh - 180px)", width: "100%", position: "relative" }}>
           {/* Room Selector Sidebar */}
-          <div style={{
+          <div className={`chat-sidebar ${sidebarOpen ? 'open' : ''}`} style={{
             width: "280px",
             borderRight: "2px solid rgba(102, 126, 234, 0.1)",
             background: "linear-gradient(to bottom, #ffffff 0%, #f8fafc 100%)",
@@ -4604,6 +4611,7 @@ function ChatPage({ currentUser, authToken, onLogout, onNavigate }) {
                     setRoomType('year');
                     setMessages([]);
                     setLastMessageId(0);
+                    setSidebarOpen(false); // Close sidebar on mobile after selection
                     loadMessages(true);
                   }}
                   style={{
@@ -4686,6 +4694,7 @@ function ChatPage({ currentUser, authToken, onLogout, onNavigate }) {
                       setRoomType('course');
                       setMessages([]);
                       setLastMessageId(0);
+                      setSidebarOpen(false); // Close sidebar on mobile after selection
                       loadMessages(true);
                     }}
                     style={{
@@ -4762,6 +4771,17 @@ function ChatPage({ currentUser, authToken, onLogout, onNavigate }) {
           {/* Chat Main Area */}
           <div className="chat-main" style={{ flex: 1 }}>
           <div className="chat-header">
+            <button
+              className="menu-toggle-btn"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              aria-label="Toggle sidebar"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            </button>
             <div className="chat-header-info">
               <div className="room-avatar">
                   {currentRoom ? (roomType === 'course' ? currentRoom.course_code?.charAt(0) || 'C' : currentRoom.name?.charAt(0) || 'Y') : 'C'}
@@ -4841,6 +4861,7 @@ function AdminChatPage({ currentUser, authToken, onLogout, onNavigate }) {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [lastMessageId, setLastMessageId] = useState(0);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const messagesEndRef = useRef(null);
   const chatMessagesRef = useRef(null);
 
@@ -4943,6 +4964,7 @@ function AdminChatPage({ currentUser, authToken, onLogout, onNavigate }) {
     setRoomType(type);
     setMessages([]);
     setLastMessageId(0);
+    setSidebarOpen(false); // Close sidebar on mobile after selection
     await loadMessages(true);
   };
 
@@ -5109,9 +5131,15 @@ function AdminChatPage({ currentUser, authToken, onLogout, onNavigate }) {
       />
 
       <div className="chat-container" style={{ width: "100%", margin: 0, padding: 0 }}>
-        <div style={{ display: "flex", height: "calc(100vh - 180px)", width: "100%" }}>
+        {/* Overlay for mobile sidebar */}
+        <div 
+          className={`chat-sidebar-overlay ${sidebarOpen ? 'active' : ''}`}
+          onClick={() => setSidebarOpen(false)}
+        />
+        
+        <div style={{ display: "flex", height: "calc(100vh - 180px)", width: "100%", position: "relative" }}>
           {/* Room Selector Sidebar */}
-          <div style={{
+          <div className={`chat-sidebar ${sidebarOpen ? 'open' : ''}`} style={{
             width: "320px",
             borderRight: "2px solid rgba(102, 126, 234, 0.1)",
             background: "linear-gradient(to bottom, #ffffff 0%, #f8fafc 100%)",
@@ -5328,6 +5356,15 @@ function AdminChatPage({ currentUser, authToken, onLogout, onNavigate }) {
           {/* Chat Main Area */}
           <div className="chat-main" style={{ flex: 1 }}>
             <div className="chat-header">
+              <button
+                className="menu-toggle-btn"
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                aria-label="Toggle sidebar"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              </button>
               <div className="chat-header-info">
                 <div className="room-avatar">
                   {currentRoom ? (roomType === 'course' ? currentRoom.course_code?.charAt(0) || 'C' : currentRoom.name?.charAt(0) || 'Y') : 'A'}
